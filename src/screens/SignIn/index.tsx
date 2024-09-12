@@ -6,8 +6,13 @@ import useSignIn from '@screens/SignIn/hooks/useSignIn';
 import CountryCode from '@screens/SignIn/components/CountryCode';
 
 const SignIn = () => {
-  const {phoneNumber, isErrorPhoneNumber, borderInputStyle, onChangeText} =
-    useSignIn();
+  const {
+    phoneNumber,
+    isErrorPhoneNumber,
+    borderInputStyle,
+    onChangeText,
+    onPressContinue,
+  } = useSignIn();
 
   return (
     <View style={styles.container}>
@@ -22,7 +27,11 @@ const SignIn = () => {
           keyboardType="number-pad"
         />
       </View>
-      <Button label="Continue" disabled={isErrorPhoneNumber} />
+      <Button
+        label="Continue"
+        disabled={isErrorPhoneNumber}
+        onPress={onPressContinue}
+      />
     </View>
   );
 };

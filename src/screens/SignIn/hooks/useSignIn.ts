@@ -1,5 +1,8 @@
 import {COLORS} from '@constants/colors';
+import {RouteNames} from '@lib/navigation/routes';
+import {navigate} from '@lib/navigation/utils';
 import {useCallback, useMemo, useState} from 'react';
+import {COUNTRY_CODE} from '@screens/SignIn/config';
 
 const useSignIn = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -20,14 +23,27 @@ const useSignIn = () => {
     [isErrorPhoneNumber, phoneNumber],
   );
 
+  const onPressContinue = useCallback(() => {
+    navigate(RouteNames.OTP, {
+      phoneNumber: COUNTRY_CODE.dial_code + phoneNumber,
+    });
+  }, [phoneNumber]);
+
   return useMemo(
     () => ({
       isErrorPhoneNumber,
       phoneNumber,
       borderInputStyle,
       onChangeText,
+      onPressContinue,
     }),
-    [isErrorPhoneNumber, phoneNumber, borderInputStyle, onChangeText],
+    [
+      isErrorPhoneNumber,
+      phoneNumber,
+      borderInputStyle,
+      onChangeText,
+      onPressContinue,
+    ],
   );
 };
 
