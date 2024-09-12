@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import BottomTabNavigator from '@navigators/BottomTabNavigator';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -8,10 +8,15 @@ import {AppParamList} from '@lib/navigation/types';
 import {RouteNames} from '@lib/navigation/routes';
 import {OTP, SignIn, Splash} from '@screens';
 import {navigationRef} from '@lib/navigation/utils';
+import {BackButton} from '@components';
 
 const Stack = createNativeStackNavigator<AppParamList>();
 
 const RootNavigator = () => {
+  const headerLeft = useCallback(() => {
+    return <BackButton />;
+  }, []);
+
   return (
     <NavigationContainer ref={navigationRef}>
       <SafeAreaView style={styles.safeAreaView}>
@@ -25,7 +30,16 @@ const RootNavigator = () => {
             component={BottomTabNavigator}
           />
           <Stack.Screen name={RouteNames.SIGN_IN} component={SignIn} />
-          <Stack.Screen name={RouteNames.OTP} component={OTP} />
+          <Stack.Screen
+            name={RouteNames.OTP}
+            component={OTP}
+            options={{
+              title: '',
+              headerShown: true,
+              headerLeft,
+              headerShadowVisible: false,
+            }}
+          />
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
