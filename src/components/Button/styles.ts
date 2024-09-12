@@ -6,9 +6,12 @@ export default StyleSheet.create({
   container: {
     backgroundColor: COLORS.GREEN,
     borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
     paddingVertical: 16,
+    alignItems: 'center',
+  },
+  contentContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   label: {
     fontSize: 14,
