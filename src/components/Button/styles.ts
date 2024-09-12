@@ -1,0 +1,18 @@
+import {COLORS} from '@constants/colors';
+import {FONTS} from '@constants/fonts';
+import {StyleSheet} from 'react-native';
+
+export default StyleSheet.create({
+  container: {
+    backgroundColor: COLORS.GREEN,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 16,
+  },
+  label: {
+    fontSize: 14,
+    fontFamily: FONTS.MontserratSemiBold,
+    color: COLORS.WHITE,
+  },
+});
