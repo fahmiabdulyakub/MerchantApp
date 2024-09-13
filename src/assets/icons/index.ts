@@ -1,7 +1,20 @@
 import ICArrowLeft from '@assets/icons/ICArrowLeft';
+import ICBell from '@assets/icons/ICBell';
 import ICShop from '@assets/icons/ICShop';
 import ICLogout from '@assets/icons/ICLogout';
 import ICHome from '@assets/icons/ICHome';
 import ICProfile from '@assets/icons/ICProfile';
+import ICSearch from '@assets/icons/ICSearch';
+import ICQRCode from '@assets/icons/ICQRCode';
 import ICWallet from '@assets/icons/ICWallet';
-export {ICArrowLeft, ICShop, ICLogout, ICHome, ICProfile, ICWallet};
+export {
+  ICArrowLeft,
+  ICBell,
+  ICShop,
+  ICLogout,
+  ICHome,
+  ICSearch,
+  ICProfile,
+  ICQRCode,
+  ICWallet,
+};
