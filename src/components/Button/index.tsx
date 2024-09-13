@@ -9,11 +9,11 @@ const Button = (props: IButton) => {
     props;
   const containerStyle = useMemo(
     () => [
-      styles.container,
+      icon ? styles.iconContainer : styles.container,
       style,
-      disabled && {backgroundColor: COLORS.LIGHT_GREY},
+      disabled && label && {backgroundColor: COLORS.LIGHT_GREY},
     ],
-    [disabled, style],
+    [disabled, icon, label, style],
   );
   return (
     <TouchableOpacity
@@ -25,7 +25,7 @@ const Button = (props: IButton) => {
       ) : (
         <View style={styles.contentContainer}>
           {icon}
-          <Text style={[styles.label, textStyle]}>{label}</Text>
+          {label && <Text style={[styles.label, textStyle]}>{label}</Text>}
         </View>
       )}
     </TouchableOpacity>

@@ -9,6 +9,9 @@ export default StyleSheet.create({
     paddingVertical: 16,
     alignItems: 'center',
   },
+  iconContainer: {
+    alignItems: 'center',
+  },
   contentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
