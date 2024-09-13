@@ -5,7 +5,7 @@ import {IInput} from '@components/Input/types';
 import {COLORS} from '@constants/colors';
 
 const Input = (props: IInput) => {
-  const {left, style, ...baseProps} = props;
+  const {left, right, style, ...baseProps} = props;
   return (
     <View style={[styles.container, style]}>
       {left}
@@ -15,6 +15,7 @@ const Input = (props: IInput) => {
         numberOfLines={5}
         {...baseProps}
       />
+      {right}
     </View>
   );
 };
