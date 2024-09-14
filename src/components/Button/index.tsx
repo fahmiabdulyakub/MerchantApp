@@ -7,6 +7,7 @@ import {COLORS} from '@constants/colors';
 const Button = (props: IButton) => {
   const {label, isLoading, style, disabled, textStyle, icon, ...baseProps} =
     props;
+
   const containerStyle = useMemo(
     () => [
       icon ? styles.iconContainer : styles.container,
@@ -15,6 +16,12 @@ const Button = (props: IButton) => {
     ],
     [disabled, icon, label, style],
   );
+
+  const labelStyle = useMemo(
+    () => [styles.label, textStyle, icon && label && {marginLeft: 8}],
+    [textStyle, icon, label],
+  );
+
   return (
     <TouchableOpacity
       style={containerStyle}
@@ -25,7 +32,7 @@ const Button = (props: IButton) => {
       ) : (
         <View style={styles.contentContainer}>
           {icon}
-          {label && <Text style={[styles.label, textStyle]}>{label}</Text>}
+          {label && <Text style={labelStyle}>{label}</Text>}
         </View>
       )}
     </TouchableOpacity>
