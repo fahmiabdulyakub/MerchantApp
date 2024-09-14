@@ -4,6 +4,7 @@ import {ICHome, ICProfile, ICShop, ICWallet} from '@assets/icons';
 import {MAIN_TABS_OPTIONS} from '@lib/navigation/config';
 import {RouteNames} from '@lib/navigation/routes';
 import {Home, Manage, Profile, Shop} from '@screens';
+import {FONTS} from '@constants/fonts';
 
 const BottomTabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -30,7 +31,16 @@ const BottomTabNavigator = () => {
       <Tab.Screen
         name={RouteNames.PROFILE}
         component={Profile}
-        options={{title: 'Profile', tabBarIcon: ICProfile}}
+        options={{
+          title: 'Profile',
+          headerShown: true,
+          tabBarIcon: ICProfile,
+          headerTitleStyle: {
+            fontFamily: FONTS.MontserratBold,
+            fontSize: 14,
+          },
+          headerTitleAlign: 'center',
+        }}
       />
     </Tab.Navigator>
   );
