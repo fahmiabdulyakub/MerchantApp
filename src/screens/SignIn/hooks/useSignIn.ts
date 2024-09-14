@@ -3,9 +3,11 @@ import {RouteNames} from '@lib/navigation/routes';
 import {navigate} from '@lib/navigation/utils';
 import {useCallback, useMemo, useState} from 'react';
 import {COUNTRY_CODE} from '@screens/SignIn/config';
+import {sendOTP} from '@services';
 
 const useSignIn = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [isErrorPhoneNumber, setIsErrorPhoneNumber] = useState(true);
 
   const onChangeText = useCallback((value: string) => {
@@ -24,13 +26,24 @@ const useSignIn = () => {
   );
 
   const onPressContinue = useCallback(() => {
-    navigate(RouteNames.OTP, {
-      phoneNumber: COUNTRY_CODE.dial_code + phoneNumber,
-    });
+    setIsLoading(true);
+    sendOTP({
+      country_dialling_code: COUNTRY_CODE.dial_code.replace('+', ''),
+      mobile_number: phoneNumber,
+    })
+      .then(({session_id}) => {
+        setIsLoading(false);
+        navigate(RouteNames.OTP, {
+          phoneNumber: COUNTRY_CODE.dial_code + phoneNumber,
+          session_id,
+        });
+      })
+      .catch(() => setIsLoading(false));
   }, [phoneNumber]);
 
   return useMemo(
     () => ({
+      isLoading,
       isErrorPhoneNumber,
       phoneNumber,
       borderInputStyle,
@@ -38,6 +51,7 @@ const useSignIn = () => {
       onPressContinue,
     }),
     [
+      isLoading,
       isErrorPhoneNumber,
       phoneNumber,
       borderInputStyle,

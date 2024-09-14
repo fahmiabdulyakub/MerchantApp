@@ -4,6 +4,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 export interface IOTP {
   phoneNumber: string;
+  session_id: string;
 }
 
 export type OTPProps = NativeStackScreenProps<AppParamList, RouteNames.OTP>;

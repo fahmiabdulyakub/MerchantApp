@@ -7,6 +7,7 @@ import CountryCode from '@screens/SignIn/components/CountryCode';
 
 const SignIn = () => {
   const {
+    isLoading,
     phoneNumber,
     isErrorPhoneNumber,
     borderInputStyle,
@@ -31,6 +32,7 @@ const SignIn = () => {
         label="Continue"
         disabled={isErrorPhoneNumber}
         onPress={onPressContinue}
+        isLoading={isLoading}
       />
     </View>
   );
