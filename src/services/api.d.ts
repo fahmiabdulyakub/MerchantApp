@@ -10,6 +10,7 @@ declare global {
     url: string;
     method: string;
     data?: Record<string, unknown> | string | null;
+    params?: Record<string, unknown> | string | null;
     headers?:
       | Headers
       | string[][]

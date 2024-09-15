@@ -1,27 +1,29 @@
-import axios, {AxiosError} from 'axios';
+import axios from 'axios';
 import set from 'lodash/set';
 import Config from 'react-native-config';
 
-export const api = async ({data, method, url}: ApiBuilder) => {
-  const headers = await buildFetchHeaders();
-  try {
-    const response = await axios({
-      url: Config.BASE_URL + url,
-      headers,
-      data,
-      method,
+export const api = async <T>({data, params, method, url, headers}: ApiBuilder) => {
+  let result: ApiResponse<T> = {
+    success: false,
+    data: {} as T,
+    message: '',
+    errors: '',
+  };
+  const newHeaders = {...(await buildFetchHeaders()), ...headers};
+  const instance = axios.create({
+    baseURL: Config.BASE_URL,
+    headers: newHeaders,
+  });
+
+  await instance({url, data, method, params})
+    .then(res => {
+      result = res.data;
+    })
+    .catch(err => {
+      result = err.response.data;
     });
 
-    return response.data;
-  } catch (axiosError) {
-    const err = axiosError as AxiosError;
-    return {
-      error: {
-        status: err.response?.status,
-        data: err.response?.data || err.message,
-      },
-    };
-  }
+  return result.data;
 };
 
 export const buildFetchHeaders = async (): Promise<{[key: string]: string}> => {
