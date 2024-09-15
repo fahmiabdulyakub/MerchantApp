@@ -25,20 +25,23 @@ const useSignIn = () => {
     [isErrorPhoneNumber, phoneNumber],
   );
 
-  const onPressContinue = useCallback(() => {
+  const onPressContinue = useCallback(async () => {
     setIsLoading(true);
-    sendOTP({
+    const response = await sendOTP({
       country_dialling_code: COUNTRY_CODE.dial_code.replace('+', ''),
       mobile_number: phoneNumber,
-    })
-      .then(({session_id}) => {
-        setIsLoading(false);
-        navigate(RouteNames.OTP, {
-          phoneNumber: COUNTRY_CODE.dial_code + phoneNumber,
-          session_id,
-        });
-      })
-      .catch(() => setIsLoading(false));
+    });
+
+    if (response?.session_id) {
+      setIsLoading(false);
+      navigate(RouteNames.OTP, {
+        phoneNumber: COUNTRY_CODE.dial_code + phoneNumber,
+        session_id: response.session_id,
+      });
+    } else {
+      setIsErrorPhoneNumber(true);
+      setIsLoading(false);
+    }
   }, [phoneNumber]);
 
   return useMemo(
