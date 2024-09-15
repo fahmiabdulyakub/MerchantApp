@@ -1,5 +1,5 @@
-import {StatusBar, View} from 'react-native';
-import React from 'react';
+import {ActivityIndicator, StatusBar, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import Header from '@screens/Home/components/Header';
 import {Button, Input} from '@components';
 import {ICQRCode, ICSearch} from '@assets/icons';
@@ -7,35 +7,26 @@ import {styles} from '@screens/Home/styles';
 import MerchantList from './components/MerchantList';
 import {COLORS} from '@constants/colors';
 import {useIsFocused} from '@react-navigation/native';
+import {getFeaturedMerchant} from '@services';
+import {MerchantType} from '@components/MerchantCard/types';
 
 const Home = () => {
+  const [data, setData] = useState<MerchantType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const focused = useIsFocused();
-  const data = [
-    {
-      slug: 'acme-singapore',
-      name: 'ACME Singapore',
-      logo: 'https://static.uat.abnk.ai/media/uploads/merchants/merchant/2024/07/08/c669ae56-3d7a-44d6-ba63-6a43e56f1d62_stsmall507x507-pad600x600f8f8f8.jpg',
-      categories: [
-        {
-          external_id: 'home-renovation',
-          name: 'Home Renovation',
-        },
-      ],
-      description: '',
-      website: 'https://acme.sg',
-      highlighted_products: [],
-      min_in_store_checkout_order_grand_total: '100.00',
-      stores: [
-        {
-          external_id: 'SG-S-YJYTJTKCETDD',
-          slug: 'acme-singapore-acme-singapore-store',
-          name: 'ACME Singapore Store',
-          address: '',
-          photo: null,
-        },
-      ],
-    },
-  ];
+
+  const getMerchant = useCallback(async () => {
+    setIsLoading(true);
+    const response = await getFeaturedMerchant();
+    if (response?.merchants) {
+      setData(response.merchants);
+    }
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    getMerchant();
+  }, [getMerchant]);
 
   return (
     <View style={styles.container}>
@@ -43,7 +34,15 @@ const Home = () => {
         <StatusBar backgroundColor={COLORS.GREEN} barStyle="light-content" />
       )}
       <Header />
-      <MerchantList data={data} />
+      {isLoading ? (
+        <ActivityIndicator
+          size="large"
+          color={COLORS.GREEN}
+          style={styles.loading}
+        />
+      ) : (
+        <MerchantList data={data} />
+      )}
       <View style={styles.searchContainer}>
         <Input
           style={styles.search}

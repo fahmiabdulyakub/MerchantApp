@@ -15,4 +15,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderColor: COLORS.NEUTRAL,
   },
+  loading: {
+    marginTop: 64,
+  },
 });
