@@ -1,15 +1,23 @@
+import {STORAGE_KEYS} from '@constants/storage';
 import axios from 'axios';
 import set from 'lodash/set';
 import Config from 'react-native-config';
+import {MMKVLoader} from 'react-native-mmkv-storage';
 
-export const api = async <T>({data, params, method, url, headers}: ApiBuilder) => {
+export const api = async <T>({
+  data,
+  params,
+  method,
+  url,
+  headers,
+}: ApiBuilder) => {
   let result: ApiResponse<T> = {
     success: false,
     data: {} as T,
     message: '',
     errors: '',
   };
-  const newHeaders = {...(await buildFetchHeaders()), ...headers};
+  const newHeaders = {...(await getHeaders()), ...headers};
   const instance = axios.create({
     baseURL: Config.BASE_URL,
     headers: newHeaders,
@@ -26,8 +34,11 @@ export const api = async <T>({data, params, method, url, headers}: ApiBuilder) =
   return result.data;
 };
 
-export const buildFetchHeaders = async (): Promise<{[key: string]: string}> => {
-  const token = undefined;
+export const getHeaders = async (): Promise<{[key: string]: string}> => {
+  const token = new MMKVLoader()
+    .withEncryption()
+    .withInstanceID(STORAGE_KEYS.TOKEN)
+    .initialize();
 
   const headers: {[key: string]: string} = {
     accept: 'application/json, text/plain, */*',
