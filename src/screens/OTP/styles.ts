@@ -25,6 +25,16 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.MontserratBold,
     color: COLORS.BLACK,
   },
+  loading: {
+    alignItems: 'center',
+  },
+  error: {
+    fontSize: 14,
+    fontFamily: FONTS.MontserratRegular,
+    color: COLORS.RED,
+    marginBottom: 16,
+    textAlign: 'center',
+  },
 });
 
 export default styles;

@@ -1,6 +1,7 @@
 import {RouteNames} from '@lib/navigation/routes';
 import {AppParamList} from '@lib/navigation/types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {TextInputProps} from 'react-native';
 
 export interface IOTP {
   phoneNumber: string;
@@ -9,10 +10,11 @@ export interface IOTP {
 
 export type OTPProps = NativeStackScreenProps<AppParamList, RouteNames.OTP>;
 
-export interface IInputOTP {
+export type IInputOTP = {
   otp: string[];
-  onChange: (value: string, index: number) => void;
-}
+  onChangeOtp: (value: string, index: number) => void;
+  isError?: boolean;
+} & TextInputProps;
 
 export interface IResendOTP {
   timeLeft: number;
