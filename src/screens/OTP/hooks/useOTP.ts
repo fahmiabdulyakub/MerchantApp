@@ -1,9 +1,10 @@
+import {useEncryptedToken} from '@hooks';
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import {OTP_LENGTH, RESEND_TIME} from '@screens/OTP/config';
-import {verifyOTP} from '@services';
 import {reset} from '@lib/navigation/utils';
 import {RouteNames} from '@lib/navigation/routes';
 import {IOTP} from '@screens/OTP/types';
+import {OTP_LENGTH, RESEND_TIME} from '@screens/OTP/config';
+import {verifyOTP} from '@services';
 
 const useOTP = (params: IOTP) => {
   const {session_id} = params;
@@ -11,6 +12,7 @@ const useOTP = (params: IOTP) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [timeLeft, setTimeLeft] = useState<number>(RESEND_TIME);
+  const {saveToken} = useEncryptedToken();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -30,6 +32,7 @@ const useOTP = (params: IOTP) => {
         setIsLoading(true);
         const response = await verifyOTP({otp: newOtp.join(''), session_id});
         if (response?.token) {
+          saveToken(response.token);
           reset(RouteNames.MAIN_APP);
           setIsLoading(false);
         } else {
@@ -39,7 +42,7 @@ const useOTP = (params: IOTP) => {
         }
       }
     },
-    [otp, session_id],
+    [otp, session_id, saveToken],
   );
 
   const handleResend = useCallback(() => {
