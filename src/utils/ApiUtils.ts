@@ -37,8 +37,8 @@ export const api = async <T>({
 export const getHeaders = async (): Promise<{[key: string]: string}> => {
   const token = new MMKVLoader()
     .withEncryption()
-    .withInstanceID(STORAGE_KEYS.TOKEN)
-    .initialize();
+    .initialize()
+    .getString(STORAGE_KEYS.TOKEN);
 
   const headers: {[key: string]: string} = {
     accept: 'application/json, text/plain, */*',
