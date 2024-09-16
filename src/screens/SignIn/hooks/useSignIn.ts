@@ -19,10 +19,12 @@ const useSignIn = () => {
 
   const borderInputStyle = useMemo(
     () =>
-      phoneNumber && {
-        borderColor:
-          isErrorPhoneNumber && phoneNumber ? COLORS.RED : COLORS.GREEN,
-      },
+      phoneNumber
+        ? {
+            borderColor:
+              isErrorPhoneNumber && phoneNumber ? COLORS.RED : COLORS.GREEN,
+          }
+        : undefined,
     [isErrorPhoneNumber, phoneNumber],
   );
 

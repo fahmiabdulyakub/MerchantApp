@@ -5,6 +5,7 @@ import {verifyOTP} from '@services';
 import {useEncryptedToken} from '@hooks';
 import useOTP from '@screens/OTP/hooks/useOTP';
 import {OTP_LENGTH, RESEND_TIME} from '@screens/OTP/config';
+import {MOCK_PHONE_NUMBER, MOCK_SESSION_ID} from '@screens/SignIn/mock';
 
 jest.mock('@lib/navigation/utils', () => ({
   reset: jest.fn(),
@@ -19,9 +20,11 @@ jest.mock('@hooks', () => ({
 }));
 
 describe('useOTP Hook', () => {
-  const mockSessionId = 'session_123';
   const mockToken = 'mock_token';
-  const mockParams = {session_id: mockSessionId, phoneNumber: '90001002'};
+  const mockParams = {
+    session_id: MOCK_SESSION_ID,
+    phoneNumber: MOCK_PHONE_NUMBER,
+  };
   const mockOtp = ['1', '2', '3', '4', '5', '6'];
 
   beforeEach(() => {
