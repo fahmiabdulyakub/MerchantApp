@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View, Text, SafeAreaView} from 'react-native';
 import React from 'react';
 import styles from '@screens/SignIn/styles';
 import {Button, Input} from '@components';
@@ -17,26 +17,28 @@ const SignIn = () => {
   } = useSignIn();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <Text style={styles.title}>Enter your phone number</Text>
-        <Input
-          style={borderInputStyle}
-          value={phoneNumber}
-          onChangeText={onChangeText}
-          left={<CountryCode />}
-          placeholder="Phone number"
-          keyboardType="number-pad"
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <View style={styles.contentContainer}>
+          <Text style={styles.title}>Enter your phone number</Text>
+          <Input
+            style={borderInputStyle}
+            value={phoneNumber}
+            onChangeText={onChangeText}
+            left={<CountryCode />}
+            placeholder="Phone number"
+            keyboardType="number-pad"
+          />
+          {error?.message && <Text style={styles.error}>{error.message}</Text>}
+        </View>
+        <Button
+          label="Continue"
+          disabled={isErrorPhoneNumber}
+          onPress={onPressContinue}
+          isLoading={isLoading}
         />
-        {error?.message && <Text style={styles.error}>{error.message}</Text>}
       </View>
-      <Button
-        label="Continue"
-        disabled={isErrorPhoneNumber}
-        onPress={onPressContinue}
-        isLoading={isLoading}
-      />
-    </View>
+    </SafeAreaView>
   );
 };
 

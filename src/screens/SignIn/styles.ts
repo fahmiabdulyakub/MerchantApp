@@ -3,6 +3,10 @@ import {COLORS} from '@constants/colors';
 import {FONTS} from '@constants/fonts';
 
 export default StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: COLORS.WHITE,
+  },
   container: {
     flex: 1,
     backgroundColor: COLORS.WHITE,

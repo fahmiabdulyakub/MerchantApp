@@ -2,8 +2,13 @@ import {COLORS} from '@constants/colors';
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: COLORS.GREEN,
+  },
   container: {
     flex: 1,
+    backgroundColor: COLORS.WHITE,
   },
   searchContainer: {
     width: '100%',

@@ -1,10 +1,4 @@
-import {
-  Text,
-  KeyboardAvoidingView,
-  Platform,
-  ActivityIndicator,
-  View,
-} from 'react-native';
+import {Text, ActivityIndicator, View} from 'react-native';
 import React from 'react';
 import {OTPProps} from '@screens/OTP/types';
 import styles from '@screens/OTP/styles';
@@ -26,9 +20,7 @@ const OTP = ({route}: OTPProps) => {
   } = useOTP(route.params);
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.title}>Verify OTP</Text>
       <Text style={styles.subtitle}>
         Enter the OTP sent to <Text style={styles.phone}>{phoneNumber}</Text>.
@@ -49,7 +41,7 @@ const OTP = ({route}: OTPProps) => {
           <ResendOTP timeLeft={timeLeft} onResend={handleResend} />
         </>
       )}
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 

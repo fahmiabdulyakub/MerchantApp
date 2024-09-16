@@ -1,5 +1,5 @@
 import React from 'react';
-import RootNavigator from './src/navigators/RootNavigator';
+import RootNavigator from '@navigators/RootNavigator';
 
 const App = () => {
   return <RootNavigator />;
