@@ -14,8 +14,8 @@ export const api = async <T>({
   let result: ApiResponse<T> = {
     success: false,
     data: {} as T,
-    message: '',
-    errors: '',
+    message: null,
+    errors: {code: '', message: ''},
   };
   const newHeaders = {...(await getHeaders()), ...headers};
   const instance = axios.create({
@@ -28,10 +28,20 @@ export const api = async <T>({
       result = res.data;
     })
     .catch(err => {
-      result = err.response.data;
+      result = {
+        ...result,
+        errors: {
+          code: err.response.data.error ? err.response.data.error.code : '',
+          message: err.response.data.error
+            ? err.response.data.error.message
+            : err.response.data.errors.mobile_number
+            ? err.response.data.errors.mobile_number[0]
+            : err.response.data.message,
+        },
+      };
     });
 
-  return result.data;
+  return result;
 };
 
 export const getHeaders = async (): Promise<{[key: string]: string}> => {

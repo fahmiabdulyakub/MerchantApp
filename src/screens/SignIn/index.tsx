@@ -11,6 +11,7 @@ const SignIn = () => {
     phoneNumber,
     isErrorPhoneNumber,
     borderInputStyle,
+    error,
     onChangeText,
     onPressContinue,
   } = useSignIn();
@@ -27,6 +28,7 @@ const SignIn = () => {
           placeholder="Phone number"
           keyboardType="number-pad"
         />
+        {error?.message && <Text style={styles.error}>{error.message}</Text>}
       </View>
       <Button
         label="Continue"

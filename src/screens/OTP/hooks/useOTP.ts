@@ -9,6 +9,7 @@ import {verifyOTP} from '@services';
 const useOTP = (params: IOTP) => {
   const {session_id} = params;
   const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(''));
+  const [error, setError] = useState<ErrorResponse>();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [timeLeft, setTimeLeft] = useState<number>(RESEND_TIME);
@@ -31,13 +32,14 @@ const useOTP = (params: IOTP) => {
       if (index === OTP_LENGTH - 1) {
         setIsLoading(true);
         const response = await verifyOTP({otp: newOtp.join(''), session_id});
-        if (response?.token) {
-          saveToken(response.token);
+        if (response?.data.token) {
+          saveToken(response.data.token);
           reset(RouteNames.MAIN_APP);
           setIsLoading(false);
         } else {
           setIsLoading(false);
           setIsError(true);
+          setError(response?.errors);
           setOtp(Array(OTP_LENGTH).fill(''));
         }
       }
@@ -49,16 +51,30 @@ const useOTP = (params: IOTP) => {
     setTimeLeft(RESEND_TIME);
   }, []);
 
+  const errorMessage = useMemo(
+    () => error?.message ?? 'Invalid OTP provided, please try again.',
+    [error],
+  );
+
   return useMemo(
     () => ({
       otp,
       timeLeft,
       isLoading,
       isError,
+      errorMessage,
       handleOtpChange,
       handleResend,
     }),
-    [otp, timeLeft, isLoading, isError, handleOtpChange, handleResend],
+    [
+      otp,
+      timeLeft,
+      isLoading,
+      isError,
+      errorMessage,
+      handleOtpChange,
+      handleResend,
+    ],
   );
 };
 

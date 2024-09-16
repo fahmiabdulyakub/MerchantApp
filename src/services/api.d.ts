@@ -2,8 +2,13 @@ declare global {
   type ApiResponse<T> = {
     success: boolean;
     data: T;
+    message: string | null;
+    errors: ErrorResponse;
+  };
+
+  type ErrorResponse = {
+    code: string;
     message: string;
-    errors: string;
   };
 
   type ApiBuilder = {

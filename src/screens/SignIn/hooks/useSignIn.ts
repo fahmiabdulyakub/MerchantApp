@@ -8,6 +8,7 @@ import {sendOTP} from '@services';
 const useSignIn = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<ErrorResponse>();
   const [isErrorPhoneNumber, setIsErrorPhoneNumber] = useState(true);
 
   const onChangeText = useCallback((value: string) => {
@@ -32,13 +33,14 @@ const useSignIn = () => {
       mobile_number: phoneNumber,
     });
 
-    if (response?.session_id) {
+    if (response?.data.session_id) {
       setIsLoading(false);
       navigate(RouteNames.OTP, {
         phoneNumber: COUNTRY_CODE.dial_code + phoneNumber,
-        session_id: response.session_id,
+        session_id: response.data.session_id,
       });
     } else {
+      setError(response?.errors);
       setIsErrorPhoneNumber(true);
       setIsLoading(false);
     }
@@ -50,6 +52,7 @@ const useSignIn = () => {
       isErrorPhoneNumber,
       phoneNumber,
       borderInputStyle,
+      error,
       onChangeText,
       onPressContinue,
     }),
@@ -58,6 +61,7 @@ const useSignIn = () => {
       isErrorPhoneNumber,
       phoneNumber,
       borderInputStyle,
+      error,
       onChangeText,
       onPressContinue,
     ],

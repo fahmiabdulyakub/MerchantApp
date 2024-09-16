@@ -18,4 +18,11 @@ export default StyleSheet.create({
     color: COLORS.BLACK,
     marginBottom: 24,
   },
+  error: {
+    fontSize: 14,
+    fontFamily: FONTS.MontserratRegular,
+    color: COLORS.RED,
+    marginTop: 16,
+    textAlign: 'center',
+  },
 });

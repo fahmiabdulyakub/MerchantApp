@@ -16,7 +16,7 @@ describe('useHome Hook', () => {
   beforeEach(() => {
     (useIsFocused as jest.Mock).mockReturnValue(true);
     (getFeaturedMerchant as jest.Mock).mockResolvedValue({
-      merchants: MOCK_MERCHANTS,
+      data: {merchants: MOCK_MERCHANTS},
     });
   });
 

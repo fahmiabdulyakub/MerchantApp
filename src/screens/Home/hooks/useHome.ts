@@ -11,8 +11,8 @@ const useHome = () => {
   const getMerchant = useCallback(async () => {
     setIsLoading(true);
     const response = await getFeaturedMerchant();
-    if (response?.merchants) {
-      setData(response.merchants);
+    if (response?.data.merchants) {
+      setData(response.data.merchants);
     }
     setIsLoading(false);
   }, []);

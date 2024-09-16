@@ -15,8 +15,15 @@ import {COLORS} from '@constants/colors';
 
 const OTP = ({route}: OTPProps) => {
   const {phoneNumber} = route.params;
-  const {otp, timeLeft, isLoading, isError, handleOtpChange, handleResend} =
-    useOTP(route.params);
+  const {
+    otp,
+    timeLeft,
+    isLoading,
+    isError,
+    errorMessage,
+    handleOtpChange,
+    handleResend,
+  } = useOTP(route.params);
 
   return (
     <KeyboardAvoidingView
@@ -38,7 +45,7 @@ const OTP = ({route}: OTPProps) => {
         </View>
       ) : (
         <>
-          {isError && <Text style={styles.error}>Incorrect OTP</Text>}
+          {isError && <Text style={styles.error}>{errorMessage}</Text>}
           <ResendOTP timeLeft={timeLeft} onResend={handleResend} />
         </>
       )}
