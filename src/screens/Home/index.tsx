@@ -1,32 +1,16 @@
 import {ActivityIndicator, StatusBar, View} from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React from 'react';
 import Header from '@screens/Home/components/Header';
 import {Button, Input} from '@components';
 import {ICQRCode, ICSearch} from '@assets/icons';
 import {styles} from '@screens/Home/styles';
 import MerchantList from './components/MerchantList';
 import {COLORS} from '@constants/colors';
-import {useIsFocused} from '@react-navigation/native';
-import {getFeaturedMerchant} from '@services';
-import {MerchantType} from '@components/MerchantCard/types';
+import useHome from '@screens/Home/hooks/useHome';
+
 
 const Home = () => {
-  const [data, setData] = useState<MerchantType[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const focused = useIsFocused();
-
-  const getMerchant = useCallback(async () => {
-    setIsLoading(true);
-    const response = await getFeaturedMerchant();
-    if (response?.merchants) {
-      setData(response.merchants);
-    }
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    getMerchant();
-  }, [getMerchant]);
+ const {data, isLoading, focused} = useHome();
 
   return (
     <View style={styles.container}>
