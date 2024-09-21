@@ -1,5 +1,5 @@
 import {STORAGE_KEYS} from '@constants/storage';
-import axios from 'axios';
+import axios, {AxiosInstance} from 'axios';
 import set from 'lodash/set';
 import Config from 'react-native-config';
 import {MMKVLoader} from 'react-native-mmkv-storage';
@@ -18,12 +18,13 @@ export const api = async <T>({
     errors: {code: '', message: ''},
   };
   const newHeaders = {...(await getHeaders()), ...headers};
-  const instance = axios.create({
+  const instance: AxiosInstance = axios.create({
     baseURL: Config.BASE_URL,
     headers: newHeaders,
   });
 
-  await instance({url, data, method, params})
+  await instance
+    .request({url, data, method, params})
     .then(res => {
       result = res.data;
     })
