@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: COLORS.WHITE,
+    backgroundColor: COLORS.GRAY_SMOKE,
   },
   searchContainer: {
     width: '100%',
