@@ -5,6 +5,7 @@ import Config from 'react-native-config';
 import {MMKVLoader} from 'react-native-mmkv-storage';
 
 export const api = async <T>({
+  auth,
   data,
   params,
   method,
@@ -19,14 +20,14 @@ export const api = async <T>({
   };
   const newHeaders = {...(await getHeaders()), ...headers};
   const instance: AxiosInstance = axios.create({
-    baseURL: Config.BASE_URL,
+    baseURL: auth ? Config.LOGIN_URL : Config.PRODUCT_URL,
     headers: newHeaders,
   });
 
   await instance
     .request({url, data, method, params})
     .then(res => {
-      result = res.data;
+      result = auth ? res.data : {...result, success: true, data: res.data};
     })
     .catch(err => {
       result = {
