@@ -21,7 +21,7 @@ const Splash = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={Images.abnkLogo} style={styles.image} />
+      <Image source={Images.splash} style={styles.image} />
     </View>
   );
 };
