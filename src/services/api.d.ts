@@ -12,6 +12,7 @@ declare global {
   };
 
   type ApiBuilder = {
+    auth?: boolean;
     url: string;
     method: string;
     data?: Record<string, unknown> | string | null;
