@@ -1,12 +1,12 @@
-import {ActivityIndicator, SafeAreaView, StatusBar, View} from 'react-native';
+import {SafeAreaView, StatusBar, View} from 'react-native';
 import React from 'react';
 import Header from '@screens/Home/components/Header';
 import {Button, Input} from '@components';
 import {ICQRCode, ICSearch} from '@assets/icons';
 import {styles} from '@screens/Home/styles';
-import MerchantList from './components/MerchantList';
 import {COLORS} from '@constants/colors';
 import useHome from '@screens/Home/hooks/useHome';
+import ProductList from '@screens/Home/components/ProductList';
 
 const Home = () => {
   const {data, isLoading, focused} = useHome();
@@ -18,15 +18,7 @@ const Home = () => {
           <StatusBar backgroundColor={COLORS.GREEN} barStyle="light-content" />
         )}
         <Header />
-        {isLoading ? (
-          <ActivityIndicator
-            size="large"
-            color={COLORS.GREEN}
-            style={styles.loading}
-          />
-        ) : (
-          <MerchantList data={data} />
-        )}
+        <ProductList data={data} isLoading={isLoading} />
         <View style={styles.searchContainer}>
           <Input
             style={styles.search}
