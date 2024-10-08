@@ -14,6 +14,7 @@ export const sendOTP = async (data: SendOTPType) => {
       url: SEND_OTP_PATH,
       data,
       method: REQUEST_METHOD.POST,
+      auth: true,
     });
   } catch (e) {}
 };
@@ -24,6 +25,7 @@ export const verifyOTP = async (data: VerifyOTPType) => {
       url: VERIFY_OTP_PATH,
       data,
       method: REQUEST_METHOD.POST,
+      auth: true,
     });
   } catch (e) {}
 };
