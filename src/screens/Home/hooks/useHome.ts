@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {useIsFocused} from '@react-navigation/native';
 import {getProducts} from '@services/products';
 import {ProductType} from '@components/ProductCard/types';
@@ -11,7 +11,7 @@ const useHome = () => {
   const getMerchant = useCallback(async () => {
     setIsLoading(true);
     const response = await getProducts();
-    if (response) {
+    if (response?.data) {
       setData(response.data);
     }
     setIsLoading(false);
@@ -20,10 +20,8 @@ const useHome = () => {
   useEffect(() => {
     getMerchant();
   }, [getMerchant]);
-  return useMemo(
-    () => ({data, isLoading, focused}),
-    [data, isLoading, focused],
-  );
+
+  return {data, isLoading, focused};
 };
 
 export default useHome;
