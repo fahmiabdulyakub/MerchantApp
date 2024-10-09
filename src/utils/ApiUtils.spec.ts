@@ -20,10 +20,16 @@ jest.mock('react-native-mmkv-storage', () => ({
 }));
 
 jest.mock('react-native-config', () => ({
-  BASE_URL: 'https://api.example.com',
+  LOGIN_URL: 'https://api.example.com',
 }));
 
 describe('API Utilities', () => {
+  const mockToken = 'test-token';
+  const mockHeaders = {
+    accept: 'application/json, text/plain, */*',
+    'content-type': 'application/json',
+    authorization: `Bearer ${mockToken}`,
+  };
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -47,7 +53,6 @@ describe('API Utilities', () => {
     });
 
     it('should return headers with token', async () => {
-      const mockToken = 'test-token';
       const mockMMKV = {
         getString: jest.fn().mockReturnValue(mockToken),
       };
@@ -58,11 +63,7 @@ describe('API Utilities', () => {
 
       const headers = await getHeaders();
 
-      expect(headers).toEqual({
-        accept: 'application/json, text/plain, */*',
-        'content-type': 'application/json',
-        authorization: `Bearer ${mockToken}`,
-      });
+      expect(headers).toEqual(mockHeaders);
       expect(mockMMKV.getString).toHaveBeenCalledWith(STORAGE_KEYS.TOKEN);
     });
   });
@@ -119,12 +120,13 @@ describe('API Utilities', () => {
       const result = await api({
         method: REQUEST_METHOD.GET,
         url: '/test',
+        auth: true,
       });
 
       expect(result).toEqual(mockResponse.data);
       expect(axios.create).toHaveBeenCalledWith({
         baseURL: 'https://api.example.com',
-        headers: expect.any(Object),
+        headers: mockHeaders,
       });
     });
 
